@@ -376,7 +376,7 @@ class Args:
     """The wandb's project name"""
     wandb_entity: str | None = None
     """The entity (team) of wandb's project"""
-    push_to_hub: bool = True
+    push_to_hub: bool = False
     """Whether to upload the saved model to huggingface"""
     hf_entity: str | None = None
     """The user or org name of the model repository from the Hugging Face Hub"""
@@ -2898,7 +2898,7 @@ def main(args: Args, tc: TokenizerConfig, model_config: ModelConfig):
     pprint([args, model_config])
 
     # Initialize Ray before creating Ray objects
-    ray.init(dashboard_host="0.0.0.0", runtime_env={"excludes": [".git/"], "env_vars": dict(os.environ)})
+    ray.init(dashboard_host="0.0.0.0", _temp_dir="/mnt/efs/fs1/jith/ray")
 
     # Create Ray queues.
     # Since we now send/receive individual prompts, queue size should accommodate
