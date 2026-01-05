@@ -1,4 +1,4 @@
-export UV_PROJECT_ENVIRONMENT=/mnt/efs/fs1/jith/open-instruct/.venv
+export UV_PROJECT_ENVIRONMENT=/home/ubuntu/.venv
 export UV_CACHE_DIR=/mnt/efs/fs1/jith/open-instruct/.uv_cache
 export VLLM_ALLOW_INSECURE_SERIALIZATION=1
 export HF_HOME=/mnt/efs/fs1/huggingface-cache/

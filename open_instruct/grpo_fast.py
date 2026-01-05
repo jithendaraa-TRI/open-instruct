@@ -2898,7 +2898,13 @@ def main(args: Args, tc: TokenizerConfig, model_config: ModelConfig):
     pprint([args, model_config])
 
     # Initialize Ray before creating Ray objects
-    ray.init(dashboard_host="0.0.0.0", _temp_dir="/mnt/efs/fs1/jith/ray")
+    # Note: Don't set _temp_dir to EFS - Unix sockets don't work on network filesystems.
+    # To avoid OOM, start Ray with: --object-spilling-directory=/mnt/efs/fs1/jith/ray_spill
+    ray_address = os.environ.get("RAY_ADDRESS")
+    if ray_address:
+        ray.init(address=ray_address, dashboard_host="0.0.0.0")
+    else:
+        ray.init(dashboard_host="0.0.0.0")
 
     # Create Ray queues.
     # Since we now send/receive individual prompts, queue size should accommodate

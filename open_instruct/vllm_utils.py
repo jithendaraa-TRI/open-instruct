@@ -1005,7 +1005,11 @@ def create_vllm_engines(
                 num_gpus=num_gpus,
                 scheduling_strategy=scheduling_strategy,
                 runtime_env=ray.runtime_env.RuntimeEnv(
-                    env_vars={"VLLM_ENABLE_V1_MULTIPROCESSING": "0", "TORCH_CUDA_ARCH_LIST": get_cuda_arch_list()}
+                    env_vars={
+                        "VLLM_ENABLE_V1_MULTIPROCESSING": "0",
+                        "TORCH_CUDA_ARCH_LIST": get_cuda_arch_list(),
+                        "VLLM_ALLOW_INSECURE_SERIALIZATION": "1",
+                    }
                 ),
             )
             .remote(
